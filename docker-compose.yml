@@ -1,0 +1,14 @@
+version: '3'
+services:
+  pxe:
+    image: ubuntu-pxe-server
+    volumes:
+      - data:/mnt/data/
+      - /mnt/usb0/boot:/mnt/data/netboot/boot
+    network_mode: host
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+    command: --dhcp-range=192.168.87.0,proxy
+volumes:
+  data: {}
