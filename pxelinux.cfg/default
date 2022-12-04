@@ -17,7 +17,7 @@ PROMPT 0
 # MENU RESOLUTION 1024 768
 
 # This file must be in or under the '/var/lib/tftpboot' folder.
-MENU BACKGROUND pxelinux.cfg/duan-640x480.png
+MENU BACKGROUND pxelinux.cfg/duan-640x480.jpg
 
 # Below, the hash (#) character is replaced with the countdown timer. The
 # '{,s}' allows for pluralizing a word and is used when the value is >= '2'.
@@ -57,11 +57,21 @@ MENU TITLE  PXE Boot Menu
 ### Now define the menu options
 
 LABEL local
-        MENU LABEL Boot from local drive
-        LOCALBOOT 0xffff
+    MENU LABEL Boot from local drive
+    LOCALBOOT 0xffff
 
-MENU BEGIN amd64
-        MENU TITLE amd64
+LABEL memtest86
+    MENU LABEL Memtest86+ (BIOS Only, UEFI Not Supported)
+    KERNEL ::memtest/memtest
+
+label Clonezilla-live
+MENU LABEL Clonezilla Live (Ramdisk)
+KERNEL ::clonezilla/vmlinuz
+APPEND initrd=::clonezilla/initrd.img boot=live username=user union=overlay config components quiet noswap edd=on nomodeset nodmraid locales= keyboard-layouts= ocs_live_run="ocs-live-general" ocs_live_extra_param="" ocs_live_batch=no net.ifnames=0 nosplash noprompt fetch=tftp://192.168.87.110/clonezilla/filesystem.squashfs
+
+
+# MENU BEGIN amd64
+        # MENU TITLE amd64
 
         # MENU BEGIN Debian
         # MENU TITLE Debian
@@ -79,7 +89,7 @@ MENU BEGIN amd64
 
         #     MENU END
 
-MENU END
+# MENU END
 
 # MENU BEGIN ubuntu 
 #     MENU TITLE Ubuntu Install
