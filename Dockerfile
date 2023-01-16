@@ -56,6 +56,11 @@ RUN \
     bash -c 'mv clonezilla-live-3.0.2-21-amd64/live/{filesystem.squashfs,initrd.img,vmlinuz} /mnt/data/netboot/clonezilla/' && \
     mv clonezilla-live-3.0.2-21-amd64/live/memtest /mnt/data/netboot/memtest/memtest
 
+# Clean up
+WORKDIR /mnt/data/netboot
+RUN \
+    rm -rf /tmp
+
 
 ENTRYPOINT ["dnsmasq", "--no-daemon"]
 CMD ["--dhcp-range=192.168.87.0,proxy"]
